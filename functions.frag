@@ -17,6 +17,7 @@ uniform vec3 iB5;
 uniform vec3 iB6;
 uniform vec3 iB7;
 uniform vec3 iB8;
+uniform vec3 iB9;
 out vec4 fragColor;
 
 #define PI 3.1415927
@@ -105,9 +106,14 @@ float divider(float k, int m)
     return k * (m * 2 - 1) < 1 ? 0 : pow(2, floor(k * (m * 2 - 1)) - m);
 }
 
+float modTime(float k, int m, float k2)
+{
+    return k * (m * 2  - 1) < 1 ? 0 : mod(divider(k, m) * iTime * iTempo * k2 / 120, 1);
+}
+
 float modTime(float k, int m)
 {
-    return k * (m * 2  - 1) < 1 ? 0 : mod(divider(k, m) * iTime * iTempo / 120, 1);
+    return modTime(k, m, 1.0);
 }
 
 float modTime(float k)
@@ -117,7 +123,7 @@ float modTime(float k)
 
 float sinTime(float k, int m)
 {
-    return sin(modTime(k, m) * 2 * PI);
+    return sin(modTime(k, m, 0.5) * 2 * PI);
 }
 
 float sinTime(float k)
@@ -127,7 +133,7 @@ float sinTime(float k)
 
 float cosTime(float k, int m)
 {
-    return cos(modTime(k, m) * 2 * PI);
+    return cos(modTime(k, m, 0.5) * 2 * PI);
 }
 
 float cosTime(float k)
@@ -139,12 +145,15 @@ float cosTime(float k)
 
 float magic(vec2 F, vec3 B, float i, int m)
 {
-    float v1 = mix(F.x, randTime(i + 1), B.z);
-    float v2 = mix(F.y, randTime(i + 2), B.z);
-    float b1 = mix(B.x, step(0.2, randTime(i + 3)), B.z);
-    float b2 = mix(B.y, step(0.5, randTime(i + 4)), B.z);
+    float random = mix(B.z, 0.0, iB9.y);
+    float invert = mix(0, B.z, iB9.y);
 
-    return mix(0, v1 * mix(1 - modTime(v2, m), cosTime(v2, m) * 0.5 + 0.5, b2), b1);
+    float v1 = mix(F.x, randTime(i + 1), random);
+    float v2 = mix(F.y, randTime(i + 2), random);
+    float b1 = mix(B.x, step(0.2, randTime(i + 3)), random);
+    float b2 = mix(B.y, step(0.5, randTime(i + 4)), random);
+
+    return mix(0, v1 * mix(mix(1 - modTime(v2, m), modTime(v2, m), invert), cosTime(v2, m) * 0.5 + 0.5, b2), b1);
 }
 
 float magic(vec2 F, vec3 B, float i)

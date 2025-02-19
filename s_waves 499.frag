@@ -35,7 +35,7 @@ void main()
 
     float f = (0.1 + 0.9 * (cos((y2 + 1.0) * PI) * 0.5 + 0.5)) * step(uv2.y, 0.) * step(fract(y + (s - 1) * (1 - cut) * 0.5), cut);//step(uv2.y, 0.) * mod(-uv2.y * 1.0, 1.0);
 
-    vec3 c = f * mix(vec3(1), col(magic(iF4, iB4, 859)), iB4.x);
+    vec3 c = vec3(f);
 
     fragColor = TDOutputSwizzle(vec4(c,1.));
 }
