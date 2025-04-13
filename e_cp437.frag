@@ -311,7 +311,10 @@ int guess_char(vec2 uv, float k, float t)
     int i;
     int b;
 
-    for (i = 0x00; i <= 0xFF; i++) {
+    for (i = 0x01; i <= 0xFF; i++) {
+        if (i == 0x20 || i == 0xff || i == 0xDB) {
+            continue;
+        }
         b = bit_count(cp437[i * 4] ^ b0) + bit_count(cp437[i * 4 + 1] ^ b1) + bit_count(cp437[i * 4 + 2] ^ b2) +  + bit_count(cp437[i * 4 + 3] ^ b3);
         if (b < mb) {
             mb = b;
@@ -328,26 +331,20 @@ void main()
     vec2 uv1 = (uv0 - .5) * vec2(iResolution.x / iResolution.y, 1);
 
 
-    float k0 = magic(iF5, iB5, 947);
+    float k0 = magic(iF5, iB5, 947, 4);
     float k1 = 100 * (1 - k0) + 10;
     vec3 c;
 
     float t = magic(iF6, iB6, 023);
-
-    if (k0 > 0) {
         
-        float inv_k = 1 / k1;
-        vec2 uv2 = floor(uv1 * k1) * inv_k;
-        c = frame(uv2 + vec2(0, 0) * inv_k * 0.125, 0) * 0.2
-            + frame(uv2 + vec2(1, 0) * inv_k * 0.125, 0) * 0.2
-            + frame(uv2 + vec2(1, 1) * inv_k * 0.125, 0) * 0.2
-            + frame(uv2 + vec2(0, 1) * inv_k * 0.125, 0) * 0.2
-            + frame(uv2 + vec2(0.5, 0.5) * inv_k * 0.125, 0) * 0.2;
-        c = char(uv1 * k1, guess_char(uv1, k1, t)) ? mix(vec3(1), c, magic(iF7, iB7, 342)) : vec3(0);
-    } else {
-        c = frame(uv1, 0);
-        c = mix(vec3(0), c, mean(c) > t ? 1 : 0);
-    }
+    float inv_k = 1 / k1;
+    vec2 uv2 = floor(uv1 * k1) * inv_k;
+    c = frame(uv2 + vec2(0, 0) * inv_k * 0.125, 0) * 0.2
+        + frame(uv2 + vec2(1, 0) * inv_k * 0.125, 0) * 0.2
+        + frame(uv2 + vec2(1, 1) * inv_k * 0.125, 0) * 0.2
+        + frame(uv2 + vec2(0, 1) * inv_k * 0.125, 0) * 0.2
+        + frame(uv2 + vec2(0.5, 0.5) * inv_k * 0.125, 0) * 0.2;
+    c = char(uv1 * k1, guess_char(uv1, k1, t)) ? mix(vec3(1), c, magic(iF7, iB7, 342)) : vec3(0);
 
     float feedback = magic(iF8, iB8, 958) * 0.9;
 
