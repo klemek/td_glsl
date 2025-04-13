@@ -357,3 +357,12 @@ float dither(vec2 uv, float x)
     o = o || x * 16 >= 16 && floor(mod(uv.x, 4)) == 2 && floor(mod(uv.y, 4)) == 1;
     return o ? 1 : 0;
 }
+
+
+// https://web.archive.org/web/20151229003112/http://blogs.msdn.com/b/jeuge/archive/2005/06/08/hakmem-bit-count.aspx
+ int bit_count(int u)                         
+ {
+         int c;
+         c = u - ((u >> 1) & 033333333333) - ((u >> 2) & 011111111111);
+         return ((c + (c >> 3)) & 030707070707) % 63;
+ }
