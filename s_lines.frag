@@ -6,11 +6,11 @@ void main()
 
     vec2 uv = uv1;
 
-    uv.y *= cos(uv.x * 5 * magic(iF3, iB3, 847));
+    uv.y *= cos(uv.x * 5 * magic(iF4, iB4, 847));
 
-    uv *= rot(magic(iF2, iB2, 853) + 0.1 * iTime);
+    uv *= rot(magic(iF3, iB3, 853) + 0.1 * iTime);
 
-    float k = magic(iF1, iB1, 432) * 2;
+    float k = magic(iF2, iB2, 432) * 2;
 
     uv.y = cmod(uv.y, k * 2 + 0.1);
 

@@ -6,15 +6,15 @@ void main()
 
     vec2 uv = uv1;
 
-    float k1 = magic(iF3, iB3, 857) * 5;
+    float k1 = magic(iF4, iB4, 857) * 5;
 
     uv = lens(uv, -k1, k1);
 
     uv = kal(uv, 5);
 
-    uv *= rot(magic(iF2, iB2, 647) + 0.1 * iTime);
+    uv *= rot(magic(iF3, iB3, 647) + 0.1 * iTime);
 
-    float k = magic(iF1, iB1, 918) * 0.1 + 0.05;
+    float k = magic(iF2, iB2, 918) * 0.1 + 0.05;
 
     uv = cmod(uv, k * 2);
 

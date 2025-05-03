@@ -274,13 +274,13 @@ void main()
 	vec2 uv0 = vUV.st;
     vec2 uv1 = (uv0 - .5) * vec2(iResolution.x / iResolution.y, 1);
 
-    uv1 *= magic(iF3, iB3, 847) * 20 + 3;
+    uv1 *= magic(iF4, iB4, 847) * 20 + 3;
 
     uv1 += iTime * iTempo / 60;
 
     uv1 = mod(uv1, 100) + 100;
     
-    int code = int(rand(ivec2(uv1)) * 0x100 * magic(iF1, iB1, 279, 4) + 0x100 * magic(iF2, iB2, 847, 4)) % 0xFF;
+    int code = int(rand(ivec2(uv1)) * 0x100 * magic(iF2, iB2, 279, 4) + 0x100 * magic(iF3, iB3, 847, 4)) % 0xFF;
 
     uv1 = mod(uv1, 1);
 

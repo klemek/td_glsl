@@ -8,11 +8,11 @@ void main()
 
     uv2 = vec2((uv2.x + 1) * 0.5, -uv2.y);
 
-    float m1 = magic(iF1, iB1, 746, 4) * 4.5 + 0.5;
+    float m1 = magic(iF2, iB2, 746, 4) * 4.5 + 0.5;
 
     float y = log(-uv2.y) * m1;
 
-    y = mod(y + magic(iF3, iB3, 847, 4) * 5.0, 5.);
+    y = mod(y + magic(iF4, iB4, 847, 4) * 5.0, 5.);
 
     float id = floor(y) * 32;
 
@@ -29,7 +29,7 @@ void main()
 
     s *= 0.1;
 
-    float cut =  0.025 + magic(iF2, iB2, 483, 4) * 0.475;
+    float cut =  0.025 + magic(iF3, iB3, 483, 4) * 0.475;
     
     float y2 = min(1.0, -(uv2.y));
 
