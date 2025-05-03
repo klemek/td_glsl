@@ -284,7 +284,7 @@ void main()
 
     uv1 = mod(uv1, 1);
 
-    vec3 c = (char(uv1, code) ? 1 : 0) * mix(vec3(1), col(magic(iF4, iB4, 859)), iB4.x);
+    vec3 c = vec3(char(uv1, code) ? 1 : 0);
 
     fragColor = TDOutputSwizzle(vec4(c, 1.));
 }

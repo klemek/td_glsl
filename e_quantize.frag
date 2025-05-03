@@ -7,9 +7,7 @@ void main()
 
     uv1 = round(uv1 * pixel) / pixel;
 
-    float feedback = magic(iF8, iB8, 958) * mix(1.0, 0.9, iB8.z);
-
-    vec3 c = mix(gauss2(0, uv1 * vec2(iResolution.y / iResolution.x, 1)  + .5, 0.005 * magic(iF7, iB7, 541)), texture(sTD2DInputs[1], uv0).xyz, feedback);
+    vec3 c = gauss2(0, uv1 * vec2(iResolution.y / iResolution.x, 1)  + .5, 0.005 * magic(iF7, iB7, 541));
 
     float colors = (1 - magic(iF6, iB6, 342)) * 10 + 1;
 

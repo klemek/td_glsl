@@ -16,7 +16,5 @@ void main()
 
     float f = step(uv.y, k * 0.125 + 0.05) * step(-uv.y, k * 0.125 + 0.01);
 
-    vec3 c = f * mix(vec3(1), col(magic(iF4, iB4, 859)), iB4.x);
-
-    fragColor = TDOutputSwizzle(vec4(c, 1.));
+    fragColor = TDOutputSwizzle(vec4(f, f, f, 1.));
 }

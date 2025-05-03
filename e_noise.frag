@@ -17,9 +17,5 @@ void main()
         frame(uv1, 0).z
     );
 
-    float feedback = magic(iF8, iB8, 958) * 0.9;
-
-    c = mix(c, texture(sTD2DInputs[1], uv0).xyz, feedback);
-
     fragColor = TDOutputSwizzle(vec4(c, 1.));
 }

@@ -94,6 +94,11 @@ vec3 shift3(vec3 c, float f) {
     return shift(shift(shift(c, f), f), f);
 }
 
+float mean(vec3 v)
+{
+    return v.x * 0.3333 + v.y * 0.3333 + v.z * 0.3333;
+}
+
 // TIME
 
 float randTime(float seed){

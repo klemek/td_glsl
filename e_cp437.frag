@@ -267,11 +267,6 @@ bool char(vec2 pos, int code)
     return (cp437[code * 4 + d] & v) > 0;
 }
 
-float mean(vec3 v)
-{
-    return v.x * 0.3333 + v.y * 0.3333 + v.z * 0.3333;
-}
-
 int read(vec2 uv, float k, int d, float t)
 {
     float inv_k = 1 / k;
@@ -345,10 +340,6 @@ void main()
         + frame(uv2 + vec2(0, 1) * inv_k * 0.125, 0) * 0.2
         + frame(uv2 + vec2(0.5, 0.5) * inv_k * 0.125, 0) * 0.2;
     c = char(uv1 * k1, guess_char(uv1, k1, t)) ? mix(vec3(1), c, magic(iF7, iB7, 342)) : vec3(0);
-
-    float feedback = magic(iF8, iB8, 958) * 0.9;
-
-    c = mix(c, texture(sTD2DInputs[1], uv0).xyz, feedback);
 
     fragColor = TDOutputSwizzle(vec4(c, 1.));
 }

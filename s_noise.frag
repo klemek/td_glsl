@@ -20,7 +20,5 @@ void main()
         f *= noise_f(uv0, nf - 1);
     }
 
-    vec3 c = f * mix(vec3(1), col(magic(iF4, iB4, 859)), iB4.x);
-
-    fragColor = TDOutputSwizzle(vec4(c,1.));
+    fragColor = TDOutputSwizzle(vec4(f, f, f,1.));
 }
