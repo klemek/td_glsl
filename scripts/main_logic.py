@@ -26,7 +26,7 @@ NAMES_MAP = ['srca', 'srcb', 'fx1', 'fx2', 'fx3']
 DST_SELECTED = 'table_selected'
 
 SRC_FILTER = ['b2', 'b3', 'b4', 'b10', 'b11', 'b12', 'b18', 'b19', 'b20', 's2', 's3', 's4', 's10', 's11', 's12']
-FX_FILTER = ['b6', 'b7', 'b8', 'b14', 'b15', 'b16', 'b22', 'b23', 'b24', 's5', 's6', 's7', 's8', 's13', 's14', 's15']
+FX_FILTER = ['b6', 'b7', 'b8', 'b14', 'b15', 'b16', 'b22', 'b23', 'b24', 's5', 's6', 's7', 's8', 's13', 's14', 's15', 's16']
 
 page = 0
 selected = 0
