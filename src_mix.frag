@@ -8,7 +8,7 @@ void main()
 
     float k = mean(frame(uv1, 0));
 
-    vec3 c = mix(frame(uv1, 1), frame(uv1, 0), mix(f, step(f, k), iB1.y));
+    vec3 c = mix(frame(uv1, 0), frame(uv1, 1), mix(f, step(f, k), iB1.y));
 
     fragColor = TDOutputSwizzle(vec4(c, 1.));
 }
