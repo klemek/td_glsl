@@ -12,6 +12,7 @@ MIDI_FIXED = 'midi'
 
 DST_ALL = 'table_all'
 DST_PREVIEW = 'table_preview'
+DST_BLINK = 'table_blink'
 BTN_OFFSET = 16
 
 PAGES = ['b33', 'b34', 'b35']
@@ -36,13 +37,13 @@ def onOffToOn(channel, sampleIndex, val, prev):
     global page, selected, selected_src, selected_fx
     row_index = int(channel.name[1:]) - 1
     if channel.name.startswith('b'):
-        trig(DST_ALL, row_index + BTN_OFFSET, 1)
+        v = trig(DST_ALL, row_index + BTN_OFFSET, 1)
         if channel.name in SRC_FILTER:
-            trig(f"table_{NAMES_MAP[selected_src]}", row_index + BTN_OFFSET, 1)
-            op(DST_PREVIEW)[row_index, 1] = op(f"table_{NAMES_MAP[selected_src]}")[row_index + BTN_OFFSET, 1]
+            op(DST_PREVIEW)[row_index, 1] = trig(f"table_{NAMES_MAP[selected_src]}", row_index + BTN_OFFSET, 1)
         elif channel.name in FX_FILTER:
-            trig(f"table_{NAMES_MAP[selected_fx]}", row_index + BTN_OFFSET, 1)
-            op(DST_PREVIEW)[row_index, 1] = op(f"table_{NAMES_MAP[selected_fx]}")[row_index + BTN_OFFSET, 1]
+            op(DST_PREVIEW)[row_index, 1] = trig(f"table_{NAMES_MAP[selected_fx]}", row_index + BTN_OFFSET, 1)
+        elif channel.name not in SELECTED_MAP + PAGES + ITEMS:
+            op(DST_PREVIEW)[row_index, 1] = v
     if channel.name in SELECTED_MAP:
         selected = SELECTED_MAP.index(channel.name)
         if channel.name in SRC_MAP:
@@ -55,9 +56,7 @@ def onOffToOn(channel, sampleIndex, val, prev):
             selected_fx = selected
             if change:
                 update_fx_buttons()
-        for button in SELECTED_MAP:
-            subrow_index = int(button[1:]) - 1
-            op(DST_PREVIEW)[subrow_index, 1] = '1' if button == channel.name else '0'
+        update_selected()
         update_page_items()
     elif channel.name in PAGES:
         page = PAGES.index(channel.name)
@@ -66,6 +65,16 @@ def onOffToOn(channel, sampleIndex, val, prev):
         op(DST_SELECTED)[selected, 1] = str(page * 5 + ITEMS.index(channel.name))
         update_page_items()
     return
+
+def update_selected():
+    for button in SELECTED_MAP:
+        selected_id = SELECTED_MAP.index(button)
+        row_index = int(button[1:]) - 1
+        op(DST_BLINK)[row_index, 1] = '1' if selected_id == selected else '0'
+    for button in SELECTED_MAP:
+        selected_id = SELECTED_MAP.index(button)
+        row_index = int(button[1:]) - 1
+        op(DST_PREVIEW)[row_index, 1] = '1' if (selected_id == selected_fx or selected_id == selected_src) and selected_id != selected else '0'
 
 def update_page_items():
     selected_item = int(op(DST_SELECTED)[selected, 1])
