@@ -16,9 +16,7 @@ void main()
 
     int nf = int(magic(478) * 6);
 
-    if(nf > 0) {
-        f *= noise_f(uv0, nf - 1);
-    }
+    f *= mix(1, noise_f(uv0, nf - 1), step(0.0, float(nf)));
 
     fragColor = TDOutputSwizzle(vec4(f, f, f,1.));
 }

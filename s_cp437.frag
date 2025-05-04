@@ -274,13 +274,17 @@ void main()
 	vec2 uv0 = vUV.st;
     vec2 uv1 = (uv0 - .5) * vec2(iResolution.x / iResolution.y, 1);
 
-    uv1 *= magic(iF4, iB4, 847) * 20 + 3;
+    float zoom = magic(iF2, iB2, 847);
+    float start_char = magic(iF3, iB3, 279, 4);
+    float char_delta = magic(iF4, iB4, 847, 4);
+
+    uv1 *= zoom * 20 + 3;
 
     uv1 += iTime * iTempo / 60;
 
     uv1 = mod(uv1, 100) + 100;
     
-    int code = int(rand(ivec2(uv1)) * 0x100 * magic(iF2, iB2, 279, 4) + 0x100 * magic(iF3, iB3, 847, 4)) % 0xFF;
+    int code = int(0x100 * start_char + rand(ivec2(uv1)) * 0x100 * char_delta) % 0xFF;
 
     uv1 = mod(uv1, 1);
 

@@ -25,12 +25,6 @@ SRC_SELECTED = 'selected'
 page = 0
 selected = 0
 
-# OLD
-DST = 'table1'
-MODE = 'b33'
-PAGE = 'b29'
-MAPPING = ['b27', 'b28', 'b26', 'b25']
-
 def onOffToOn(channel, sampleIndex, val, prev):
     global page, selected
     if channel.name.startswith('b'):
@@ -44,10 +38,7 @@ def onOffToOn(channel, sampleIndex, val, prev):
     elif channel.name in PAGES:
         page = PAGES.index(channel.name)
     elif channel.name in ITEMS:
-        op(DST_SELECTED)[selected, 1] = str(page * 5 + ITEMS.index(channel.name) + 1)
-    # old
-    if channel.name in MAPPING:
-        trig(DST, int(op(MIDI_FIXED)[MODE]) * 2 + int(op(MIDI_FIXED)[PAGE]), MAPPING.index(channel.name))
+        op(DST_SELECTED)[selected, 1] = str(page * 5 + ITEMS.index(channel.name))
     return
 
 # def whileOn(channel, sampleIndex, val, prev):

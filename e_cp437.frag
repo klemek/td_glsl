@@ -325,21 +325,25 @@ void main()
 	vec2 uv0 = vUV.st;
     vec2 uv1 = (uv0 - .5) * vec2(iResolution.x / iResolution.y, 1);
 
+    float zoom = magic(iF6, iB6, 947, 4);
+    float start_char = magic(iF7, iB7, 839, 4);
+    float char_delta = magic(iF8, iB8, 324, 4);
 
-    float k0 = magic(iF6, iB6, 947, 4);
-    float k1 = 100 * (1 - k0) + 10;
-    vec3 c;
+    float k1 = 100 * (1 - zoom) + 10;
 
     float t = magic(iF7, iB7, 023);
         
     float inv_k = 1 / k1;
     vec2 uv2 = floor(uv1 * k1) * inv_k;
-    c = frame(uv2 + vec2(0, 0) * inv_k * 0.125, 0) * 0.2
+
+    int code = int(0x100 * start_char + rand(ivec2(uv1 * k1)) * 0x100 * char_delta) % 0xFF;
+
+    vec3 c = frame(uv2 + vec2(0, 0) * inv_k * 0.125, 0) * 0.2
         + frame(uv2 + vec2(1, 0) * inv_k * 0.125, 0) * 0.2
         + frame(uv2 + vec2(1, 1) * inv_k * 0.125, 0) * 0.2
         + frame(uv2 + vec2(0, 1) * inv_k * 0.125, 0) * 0.2
         + frame(uv2 + vec2(0.5, 0.5) * inv_k * 0.125, 0) * 0.2;
-    c = char(uv1 * k1, guess_char(uv1, k1, t)) ? mix(vec3(1), c, magic(iF8, iB8, 342)) : vec3(0);
+    c = char(uv1 * k1, code) ? c : vec3(0);
 
     float fx = magic(iF5, vec3(1, 1, 0), 0, 4);
     c = mix(frame(uv1, 0), c, fx);
