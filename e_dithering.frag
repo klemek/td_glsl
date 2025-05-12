@@ -29,7 +29,7 @@ void main()
     }
 
     
-    vec3 c = gauss2(0, uv2 * vec2(iResolution.y / iResolution.x, 1)  + .5, 0.005 * blur);
+    vec3 c = gauss2(0, uv2 * vec2(1 / ratio, 1)  + .5, 0.005 * blur);
 
     float k3 = pow(2, 5 - floor(quantize * 5));
 
