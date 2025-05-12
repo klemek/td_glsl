@@ -1,18 +1,34 @@
 void main()
 {
+    // start
+
 	vec2 uv0 = vUV.st;
+    float ratio = iResolution.x / iResolution.y;
+    vec2 uv1 = (uv0 - .5) * vec2(ratio, 1);
 
-    vec2 uv1 = uv0 * vec2(iResolution.x / iResolution.y, 1);
+    // controls
 
-    vec2 uv2 = uv1 * 2.25;
+    float spacing = magic(iF2, iB2, 103, 4);
+
+    float thickness = magic(iF3, iB3, 154, 4);
+
+    float scroll = magic_reverse(iF4, iB4, 535, 4);
+
+    // logic
+
+    vec2 uv2 = uv1;
+
+    uv2.y += 0.5;
+
+    uv2 *= 2.25;
 
     uv2 = vec2((uv2.x + 1) * 0.5, -uv2.y);
 
-    float m1 = magic(iF2, iB2, 746, 4) * 4.5 + 0.5;
+    float m1 = spacing * 4.5 + 0.5;
 
     float y = log(-uv2.y) * m1;
 
-    y = mod(y + magic(iF4, iB4, 847, 4) * 5.0, 5.);
+    y = mod(y + scroll * 5.0 - iTime * iTempo / 960, 5.);
 
     float id = floor(y) * 32;
 
@@ -29,11 +45,13 @@ void main()
 
     s *= 0.1;
 
-    float cut =  0.025 + magic(iF3, iB3, 483, 4) * 0.475;
+    float cut =  0.025 + thickness * 0.475;
     
     float y2 = min(1.0, -(uv2.y));
 
     float f = (0.1 + 0.9 * (cos((y2 + 1.0) * PI) * 0.5 + 0.5)) * step(uv2.y, 0.) * step(fract(y + (s - 1) * (1 - cut) * 0.5), cut);//step(uv2.y, 0.) * mod(-uv2.y * 1.0, 1.0);
+
+     // output
 
     fragColor = TDOutputSwizzle(vec4(f, f, f,1.));
 }

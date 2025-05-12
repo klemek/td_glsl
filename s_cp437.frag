@@ -271,24 +271,37 @@ bool char(vec2 pos, int code)
 
 void main()
 {
+    // start
+
 	vec2 uv0 = vUV.st;
-    vec2 uv1 = (uv0 - .5) * vec2(iResolution.x / iResolution.y, 1);
+    float ratio = iResolution.x / iResolution.y;
+    vec2 uv1 = (uv0 - .5) * vec2(ratio, 1);
 
-    float zoom = magic(iF2, iB2, 847);
-    float start_char = magic(iF3, iB3, 279, 4);
-    float char_delta = magic(iF4, iB4, 847, 4);
+    // controls
 
-    uv1 *= zoom * 20 + 3;
+    float zoom = magic(iF2, iB2, 447);
 
-    uv1 += iTime * iTempo / 60;
+    float start_char = magic(iF3, iB3, 965, 4);
 
-    uv1 = mod(uv1, 100) + 100;
+    float char_delta = magic(iF4, iB4, 216, 4);
+
+    // logic
+
+    vec2 uv2 = uv1;
+
+    uv2 *= zoom * 20 + 3;
+
+    uv2 += iTime * iTempo / 60;
+
+    uv2 = mod(uv2, 100) + 100;
     
-    int code = int(0x100 * start_char + rand(ivec2(uv1)) * 0x100 * char_delta) % 0xFF;
+    int code = int(0x100 * start_char + rand(ivec2(uv2)) * 0x100 * char_delta) % 0xFF;
 
-    uv1 = mod(uv1, 1);
+    uv2 = mod(uv2, 1);
 
-    vec3 c = vec3(char(uv1, code) ? 1 : 0);
+    vec3 c = vec3(char(uv2, code) ? 1 : 0);
+
+    // output
 
     fragColor = TDOutputSwizzle(vec4(c, 1.));
 }

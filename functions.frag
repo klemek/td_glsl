@@ -148,22 +148,47 @@ float cosTime(float k)
 
 // MAGIC
 
+vec2 magic_f(vec2 F, vec3 B, float i)
+{
+    return vec2(
+        mix(F.x, randTime(i + 1), B.z),
+        mix(F.y, randTime(i + 2), B.z)
+    );
+}
+
+vec3 magic_b(vec3 B, float i)
+{
+    return vec3(
+        mix(B.x, step(0.2, randTime(i + 3)), B.z),
+        mix(B.y, step(0.5, randTime(i + 4)), B.z),
+        B.z
+    );
+}
+
+bool magic_trigger(vec3 B, float i)
+{
+    return magic_b(B, i).x > 0;
+}
+
 float magic(vec2 F, vec3 B, float i, int m)
 {
-    float random = mix(B.z, 0.0, iB9.y);
-    float invert = mix(0, B.z, iB9.y);
+    vec2 f = magic_f(F, B, i);
+    vec3 b = magic_b(B, i);
 
-    float v1 = mix(F.x, randTime(i + 1), random);
-    float v2 = mix(F.y, randTime(i + 2), random);
-    float b1 = mix(B.x, step(0.2, randTime(i + 3)), random);
-    float b2 = mix(B.y, step(0.5, randTime(i + 4)), random);
+    return mix(0, f.x * mix(1 - modTime(f.y, m), cosTime(f.y, m) * 0.5 + 0.5, b.y), b.x);
+}
 
-    return mix(0, v1 * mix(mix(1 - modTime(v2, m), modTime(v2, m), invert), cosTime(v2, m) * 0.5 + 0.5, b2), b1);
+float magic_reverse(vec2 F, vec3 B, float i, int m)
+{
+    vec2 f = magic_f(F, B, i);
+    vec3 b = magic_b(B, i);
+
+    return mix(0, f.x * mix(1 - modTime(f.y, m), modTime(f.y, m), b.y), b.x);
 }
 
 float magic(vec2 F, vec3 B, float i)
 {
-    return magic(F, B, i, 2);
+    return magic(F, B, i, 4);
 }
 
 float magic(float i)
@@ -290,6 +315,12 @@ vec3 frame(vec2 uv, int k)
 {
     uv = uv * vec2(iResolution.y / iResolution.x, 1)  + .5;
     uv = saw(uv);
+    return texture(sTD2DInputs[k], uv).xyz;
+}
+
+vec3 frame_b(vec2 uv, int k)
+{
+    uv = uv * vec2(iResolution.y / iResolution.x, 1)  + .5;
     return texture(sTD2DInputs[k], uv).xyz;
 }
 

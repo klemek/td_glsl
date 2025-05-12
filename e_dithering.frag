@@ -1,22 +1,39 @@
 void main()
 {
+    // start
+
 	vec2 uv0 = vUV.st;
-    vec2 uv1 = (uv0 - .5) * vec2(iResolution.x / iResolution.y, 1);
+    float ratio = iResolution.x / iResolution.y;
+    vec2 uv1 = (uv0 - .5) * vec2(ratio, 1);
+    
+    // controls
+
+    float pixel_size = magic(iF6, iB6, 264, 4);
+    bool pixel_size_trigger = magic_trigger(iB6, 264);
+
+    float quantize = magic(iF7, iB7, 847);
+    bool quantize_trigger = magic_trigger(iB7, 847);
+
+    float blur = magic(iF8, iB8, 487);
+
+    // logic
+
     vec2 uv2 = uv1;
 
-    float k0 = floor(magic(iF6, iB6, 947) * 5);
-    float k1 = pow(2, 10 - k0);
+    float k1 = pow(2, 10 - floor(pixel_size * 5));
 
-    if (k0 > 0) {
+    float pixel = (1 - pixel_size) * 250 + 25;
+
+    if (pixel_size_trigger) {
         uv2 = floor(uv2 * k1) / k1;
     }
 
-    vec3 c = frame(uv2, 0);
+    
+    vec3 c = gauss2(0, uv2 * vec2(iResolution.y / iResolution.x, 1)  + .5, 0.005 * blur);
 
-    float k2 = floor(magic(iF7, iB7, 124) * 5);
-    float k3 = pow(2, 5 - k2);
+    float k3 = pow(2, 5 - floor(quantize * 5));
 
-    if (k2 > 0) {
+    if (quantize_trigger) {
         c *= k3;
 
         c = vec3(
@@ -27,6 +44,8 @@ void main()
 
         c /= k3;
     }
+
+    // output
 
     float fx = magic(iF5, vec3(1, 1, 0), 0, 4);
     c = mix(frame(uv1, 0), c, fx);
