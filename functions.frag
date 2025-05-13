@@ -309,6 +309,15 @@ float capsule(vec2 uv, float r, float d, float a)
     return min(1, f1 + f2 + f3);
 }
 
+float rect(vec2 uv, vec2 c, vec2 size) {
+    uv -= c;
+    return step(abs(uv.x), size.x) * step(abs(uv.y), size.y);
+}
+
+float h_rect(vec2 uv, vec2 c, vec2 size, float k) {
+    return rect(uv, c, size + k * 0.5) - rect(uv, c, size - k * 0.5);
+}
+
 // INPUTS
 
 vec3 frame(vec2 uv, int k)
@@ -671,6 +680,25 @@ const int charsets[] = {
 
 #define CHARSETS 8
 
+const int hex_chars[] = {
+    0x30,
+    0x31,
+    0x32,
+    0x33,
+    0x34,
+    0x35,
+    0x36,
+    0x37,
+    0x38,
+    0x39,
+    0x41,
+    0x42,
+    0x43,
+    0x44,
+    0x45,
+    0x46,
+};
+
 bool char(vec2 pos, int code)
 {
     if (pos.x < 0.0 || pos.y < 0.0 || pos.x >= 1.0 || pos.y >= 1.0) {
@@ -681,6 +709,11 @@ bool char(vec2 pos, int code)
     int v = int(pow(2, subpos.y * 4 + subpos.x));
     int d = int(pos2.y * 0.25) * 2 + int(pos2.x * 0.25);
     return (cp437[code * 4 + d] & v) > 0;
+}
+
+float char_at(vec2 uv, vec2 pos, int code)
+{
+    return char(uv - pos, code) ? 1 : 0;
 }
 
 int read(vec2 uv, float k, int d, float t)

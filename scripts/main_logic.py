@@ -28,6 +28,16 @@ DST_SELECTED = 'table_selected'
 SRC_FILTER = ['b2', 'b3', 'b4', 'b10', 'b11', 'b12', 'b18', 'b19', 'b20', 's2', 's3', 's4', 's10', 's11', 's12']
 FX_FILTER = ['b6', 'b7', 'b8', 'b14', 'b15', 'b16', 'b22', 'b23', 'b24', 's5', 's6', 's7', 's8', 's13', 's14', 's15', 's16']
 
+DST_DEBUG = 'table_debug'
+DEBUG_SELECTED_INDEX = 0
+DEBUG_SELECTED_ITEM_START_INDEX = 1
+DEBUG_SELECTED_PAGE = 6
+DEBUG_SELECTED_SRC = 7
+DEBUG_SELECTED_FX = 8
+DEBUG_SELECTED_FX_VALUE_START_INDEX = 9
+DEBUG_MIX = 12
+DEBUG_MIX_TYPE = 16
+
 page = 0
 selected = 0
 selected_src = 0
@@ -38,6 +48,8 @@ def onOffToOn(channel, sampleIndex, val, prev):
     row_index = int(channel.name[1:]) - 1
     if channel.name.startswith('b'):
         v = trig(DST_ALL, row_index + BTN_OFFSET, 1)
+        if channel.name == 'b9':
+            op(DST_DEBUG)[DEBUG_MIX_TYPE, 1] = v
         if channel.name in SRC_FILTER:
             op(DST_PREVIEW)[row_index, 1] = trig(f"table_{NAMES_MAP[selected_src]}", row_index + BTN_OFFSET, 1)
         elif channel.name in FX_FILTER:
@@ -46,23 +58,29 @@ def onOffToOn(channel, sampleIndex, val, prev):
             op(DST_PREVIEW)[row_index, 1] = v
     if channel.name in SELECTED_MAP:
         selected = SELECTED_MAP.index(channel.name)
+        op(DST_DEBUG)[DEBUG_SELECTED_INDEX, 1] = selected / 6
         if channel.name in SRC_MAP:
             change = selected != selected_src
             selected_src = selected
             if change:
+                op(DST_DEBUG)[DEBUG_SELECTED_SRC, 1] = selected / 6
                 update_src_buttons()
         else:
             change = selected != selected_fx
             selected_fx = selected
             if change:
+                op(DST_DEBUG)[DEBUG_SELECTED_FX, 1] = selected / 6
                 update_fx_buttons()
         update_selected()
         update_page_items()
     elif channel.name in PAGES:
         page = PAGES.index(channel.name)
+        op(DST_DEBUG)[DEBUG_SELECTED_PAGE, 1] = page / 4
         update_page_items()
     elif channel.name in ITEMS:
-        op(DST_SELECTED)[selected, 1] = str(page * 5 + ITEMS.index(channel.name))
+        item_index = ITEMS.index(channel.name)
+        op(DST_SELECTED)[selected, 1] = str(page * 5 + item_index)
+        op(DST_DEBUG)[DEBUG_SELECTED_ITEM_START_INDEX + selected, 1] = (page * 5 + item_index) / 15
         update_page_items()
     return
 
@@ -114,6 +132,10 @@ def onValueChange(channel, sampleIndex, val, prev):
     if channel.name.startswith('s'):
         row_index = int(channel.name[1:]) - 1
         op(DST_ALL)[row_index, 1] = val
+        if channel.name == 's5':
+            op(DST_DEBUG)[DEBUG_SELECTED_FX_VALUE_START_INDEX + selected_fx - 2, 1] = val
+        elif channel.name == 's1':
+            op(DST_DEBUG)[DEBUG_MIX, 1] = val
         if channel.name in SRC_FILTER:
             op(f"table_{NAMES_MAP[selected_src]}")[row_index, 1] = val
         elif channel.name in FX_FILTER:
