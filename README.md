@@ -37,3 +37,5 @@
 ## NanoKontrol2 Controller mapping
 
 ![](./img/nanokontrol.jpg)
+
+> In blue is a sample "stage" as most sources/effects use a combination of 4 stages (see table above)
