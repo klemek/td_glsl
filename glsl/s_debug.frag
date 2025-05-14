@@ -71,9 +71,9 @@ void main()
     f += selected_fx == 4 ? h_rect(uv2, vec2(-2, -3.2), vec2(1, 0), 0.1) : 0;
 
     // show inputs / feedback
-    f += selected_srca == 0 ? rect(uv2, vec2(-8, 2), vec2(2, 0.1)) : 0;
+    f += (selected_srca % 5) == 0 ? rect(uv2, vec2(-8, 2), vec2(2, 0.1)) : 0;
     f += selected_srca == 1 ? rect(uv2, vec2(-6.5, 2), vec2(0.5, 0.1)) + rect(uv2, vec2(0, 4), vec2(7, 0.1)) + rect(uv2, vec2(-7, 3), vec2(0.1, 1.1)) + rect(uv2, vec2(7, 2), vec2(0.1, 2.1)) : 0;
-    f += selected_srcb == 0 ? rect(uv2, vec2(-8, -2), vec2(2, 0.1)) : 0;
+    f += (selected_srcb % 5) == 0 ? rect(uv2, vec2(-8, -2), vec2(2, 0.1)) : 0;
     f += selected_srcb == 1 ? rect(uv2, vec2(-6.5, -2), vec2(0.5, 0.1)) + rect(uv2, vec2(0, -4), vec2(7, 0.1)) + rect(uv2, vec2(-7, -3), vec2(0.1, 1.1)) + rect(uv2, vec2(7, -2), vec2(0.1, 2.1)) : 0;
 
     // show page
