@@ -47,7 +47,7 @@ void main()
         rect(uv2, vec2(0.55, 2), vec2(1.5, 0.1)) +
         rect(uv2, vec2(2, 1.55), vec2(0.1, 0.55)) +
         rect(uv2, vec2(7.5, 0), vec2(1.5, 0.1)) +
-        h_rect(uv2, vec2(-9, 5), vec2(1), 0.1);
+        h_rect(uv2, vec2(-9, 5.1), vec2(1), 0.1);
 
     // show selected src/fx
     f += char_at(uv2, vec2(-5.4, 1.45), hex_chars[selected_srca]);

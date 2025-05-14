@@ -1,0 +1,16 @@
+P,#,SRC,COL2,COL3,COL4,FX,COL6,COL7,COL8
+1,0,Video In 1 + Thru,Hue,Saturation,Light,Thru,Hue,Saturation,Light
+,1,Feedback + Shift,Zoom / Dezoom,X Shift,Y Shift,Feedback + Shift,Zoom / Dezoom,X Shift,Y Shift
+,2,Lines,Thick. / Dezoom,Rotation,Distortion,Shift,Zoom / Dezoom,X Shift,Y Shift
+,3,Dots,Zoom,Rotation,Lens,Colorize,Black Color,White Color,Shift
+,4,Waves,Spacing,Thickness,Vert. Scroll (R),Quantize,Pixel Size,Bit Depth,Blur
+2,5,Video In 2 + Thru,Hue,Saturation,Light,Dithering,Pixel Size,Bit Depth,Blur
+,6,Noise,Zoom,Voronoi dist.,Details,TV,Lens,Horz. Noise,Dezoom
+,7,CP437,Zoom,Charset,Char. Delta,Kaleidoscope,Axes,Rotation,Horz. Scroll
+,8,,,,,CP437,Zoom,Charset,Char. Delta
+,9,,,,,Lens,Lens limit,Lens power,Pre Zoom
+3,A,Video In 3 + Thru,Hue,Saturation,Light,,,,
+,B,,,,,,,,
+,C,,,,,,,,
+,D,,,,,,,,
+,E,Debug,---,---,---,,,,
