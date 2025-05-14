@@ -7,6 +7,8 @@
 # 
 # Make sure the corresponding toggle is enabled in the CHOP Execute DAT.
 
+initialized = False
+
 MIDI_RAW = 'midiinmap1'
 MIDI_FIXED = 'midi'
 
@@ -41,7 +43,7 @@ DEBUG_MIX_TYPE = 16
 page = 0
 selected = 0
 selected_src = 0
-selected_fx = 0
+selected_fx = 2
 
 def onOffToOn(channel, sampleIndex, val, prev):
     global page, selected, selected_src, selected_fx
@@ -63,13 +65,13 @@ def onOffToOn(channel, sampleIndex, val, prev):
             change = selected != selected_src
             selected_src = selected
             if change:
-                op(DST_DEBUG)[DEBUG_SELECTED_SRC, 1] = selected / 6
+                op(DST_DEBUG)[DEBUG_SELECTED_SRC, 1] = selected_src / 6
                 update_src_buttons()
         else:
             change = selected != selected_fx
             selected_fx = selected
             if change:
-                op(DST_DEBUG)[DEBUG_SELECTED_FX, 1] = selected / 6
+                op(DST_DEBUG)[DEBUG_SELECTED_FX, 1] = selected_fx / 6
                 update_fx_buttons()
         update_selected()
         update_page_items()
@@ -129,6 +131,17 @@ def trig(dst, row, col):
     return int(v)
 
 def onValueChange(channel, sampleIndex, val, prev):
+    global initialized
+    if not initialized:
+        initialized = True
+        update_selected()
+        update_page_items()
+        update_src_buttons()
+        update_fx_buttons()
+        op(DST_DEBUG)[DEBUG_SELECTED_PAGE, 1] = page / 4
+        op(DST_DEBUG)[DEBUG_SELECTED_INDEX, 1] = selected / 6
+        op(DST_DEBUG)[DEBUG_SELECTED_SRC, 1] = selected_src / 6
+        op(DST_DEBUG)[DEBUG_SELECTED_FX, 1] = selected_fx / 6
     if channel.name.startswith('s'):
         row_index = int(channel.name[1:]) - 1
         op(DST_ALL)[row_index, 1] = val
