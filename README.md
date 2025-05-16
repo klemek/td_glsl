@@ -16,7 +16,7 @@
 | **2** | **5** | Video In 2 + Thru | _Hue_             | _Saturation_    | _Light_            | Dithering        | _Pixel Size_    | _Bit Depth_   | _Blur_         |
 |       | **6** | Noise             | _Zoom_            | _Voronoi dist._ | _Details_          | TV               | _Lens_          | _Horz. Noise_ | _Dezoom_       |
 |       | **7** | CP437             | _Zoom_            | _Charset_       | _Char. Delta_      | Kaleidoscope     | _Axes_          | _Rotation_    | _Horz. Scroll_ |
-|       | **8** |                   |                   |                 |                    | CP437            | _Zoom_          | _Charset_     | _Char. Delta_  |
+|       | **8** | Sentences         | _Zoom_            | _Sentence_      | _Vertical repeat_  | CP437            | _Zoom_          | _Charset_     | _Char. Delta_  |
 |       | **9** |                   |                   |                 |                    | Lens             | _Lens limit_    | _Lens power_  | _Pre Zoom_     |
 | **3** | **A** | NDI In + Thru     | _Hue_             | _Saturation_    | _Light_            |                  |                 |               |                |
 |       | **B** |                   |                   |                 |                    |                  |                 |               |                |

@@ -11,7 +11,7 @@ blocks = size // (SUB_SIZE * SUB_BLOCKS)
 
 pixels = im.convert("L").load()
 
-with open(os.path.join(os.path.dirname(__file__), "cp437.c"), mode='w') as output:
+with open(os.path.join(os.path.dirname(__file__), "cp437.frag"), mode='w') as output:
     output.write("const int cp437[] = {\n")
     for y in range(blocks):
         for x in range(blocks):

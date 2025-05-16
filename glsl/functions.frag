@@ -716,6 +716,34 @@ float char_at(vec2 uv, vec2 pos, int code)
     return char(uv - pos, code) ? 1 : 0;
 }
 
+float write(vec2 uv, vec2 pos, int str[20])
+{
+    float d = 0;
+
+    d += str[0] > 0 ? char_at(uv, pos + vec2(0, 0), str[0]) : 0;
+    d += str[1] > 0 ? char_at(uv, pos + vec2(1, 0), str[1]) : 0;
+    d += str[2] > 0 ? char_at(uv, pos + vec2(2, 0), str[2]) : 0;
+    d += str[3] > 0 ? char_at(uv, pos + vec2(3, 0), str[3]) : 0;
+    d += str[4] > 0 ? char_at(uv, pos + vec2(4, 0), str[4]) : 0;
+    d += str[5] > 0 ? char_at(uv, pos + vec2(5, 0), str[5]) : 0;
+    d += str[6] > 0 ? char_at(uv, pos + vec2(6, 0), str[6]) : 0;
+    d += str[7] > 0 ? char_at(uv, pos + vec2(7, 0), str[7]) : 0;
+    d += str[8] > 0 ? char_at(uv, pos + vec2(8, 0), str[8]) : 0;
+    d += str[9] > 0 ? char_at(uv, pos + vec2(9, 0), str[9]) : 0;
+    d += str[10] > 0 ? char_at(uv, pos + vec2(10, 0), str[10]) : 0;
+    d += str[11] > 0 ? char_at(uv, pos + vec2(11, 0), str[11]) : 0;
+    d += str[12] > 0 ? char_at(uv, pos + vec2(12, 0), str[12]) : 0;
+    d += str[13] > 0 ? char_at(uv, pos + vec2(13, 0), str[13]) : 0;
+    d += str[14] > 0 ? char_at(uv, pos + vec2(14, 0), str[14]) : 0;
+    d += str[15] > 0 ? char_at(uv, pos + vec2(15, 0), str[15]) : 0;
+    d += str[16] > 0 ? char_at(uv, pos + vec2(16, 0), str[16]) : 0;
+    d += str[17] > 0 ? char_at(uv, pos + vec2(17, 0), str[17]) : 0;
+    d += str[18] > 0 ? char_at(uv, pos + vec2(18, 0), str[18]) : 0;
+    d += str[19] > 0 ? char_at(uv, pos + vec2(19, 0), str[19]) : 0;
+
+    return d;
+}
+
 int read(vec2 uv, float k, int d, float t)
 {
     float inv_k = 1 / k;
