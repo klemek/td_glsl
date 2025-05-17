@@ -2,9 +2,16 @@ import os
 
 SENTENCES = [
     "Lille VJ Fest",
-    "Everything...",
-    "you will hear or see",
-    "is LIVE"
+    "Hi, I'm Klemek",
+    "Everything you see",
+    "Pixel by pixel",
+    "Is live      ",
+    "Is generated ",
+    "Is controlled",
+    "(Even this text)",
+    "This is my code,",
+    "This is my art.",
+    "Enjoy",
 ]
 
 
@@ -14,6 +21,7 @@ def convert(txt):
         out += [str(ord(txt[i])) if i < len(txt) else str(0)]
     return f"{{{', '.join(out)}}}"
 
+print(len(SENTENCES))
 
 with open(os.path.join(os.path.dirname(__file__), "sentences.frag"), mode='w') as output:
     output.write(f"#define SENTENCE_COUNT {len(SENTENCES)}\n\n")
