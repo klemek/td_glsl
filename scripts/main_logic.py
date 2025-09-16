@@ -28,6 +28,7 @@ NAMES_MAP = ['srca', 'srcb', 'fx1', 'fx2', 'fx3']
 MIX_TYPE_BTN = 'b9'
 MIX_SLIDER = 's1'
 FX_SLIDER = 's5'
+TAP_TEMPO_BTN = 'b30'
 
 DST_SELECTED = 'table_selected'
 
@@ -123,6 +124,17 @@ def update_fx_buttons():
         if channel_name.startswith('b'):
             op(DST_PREVIEW)[row(channel_name, keep=True), 1] = op(f"table_{NAMES_MAP[selected_fx]}")[row(channel_name), 1]
 
+def init():
+    update_selected()
+    update_page_items()
+    update_src_buttons()
+    update_fx_buttons()
+    op(DST_DEBUG)[DEBUG_SELECTED_PAGE, 1] = page / 4
+    op(DST_DEBUG)[DEBUG_SELECTED_INDEX, 1] = selected / 6
+    op(DST_DEBUG)[DEBUG_SELECTED_SRC, 1] = selected_src / 6
+    op(DST_DEBUG)[DEBUG_SELECTED_FX, 1] = selected_fx / 6
+    op(DST_BLINK)[row(TAP_TEMPO_BTN, keep=True), 1] = '1'
+
 def reset_all():
     for channel_name in SRC_FILTER + FX_FILTER:
         for name in NAMES_MAP:
@@ -133,6 +145,7 @@ def reset_all():
     op(DST_ALL)[row(MIX_SLIDER), 1] = 1
     op(DST_DEBUG)[DEBUG_MIX_TYPE, 1] = 0
     op(DST_ALL)[row(MIX_TYPE_BTN), 1] = 0
+    op(DST_PREVIEW)[row(MIX_TYPE_BTN, keep=True), 1] = 0
     update_src_buttons()
     update_fx_buttons()
 
@@ -157,14 +170,7 @@ def onValueChange(channel, sampleIndex, val, prev):
     global initialized
     if not initialized:
         initialized = True
-        update_selected()
-        update_page_items()
-        update_src_buttons()
-        update_fx_buttons()
-        op(DST_DEBUG)[DEBUG_SELECTED_PAGE, 1] = page / 4
-        op(DST_DEBUG)[DEBUG_SELECTED_INDEX, 1] = selected / 6
-        op(DST_DEBUG)[DEBUG_SELECTED_SRC, 1] = selected_src / 6
-        op(DST_DEBUG)[DEBUG_SELECTED_FX, 1] = selected_fx / 6
+        init()
     if channel.name.startswith('s'):
         op(DST_ALL)[row(channel.name), 1] = val
         if channel.name == FX_SLIDER:

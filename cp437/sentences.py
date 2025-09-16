@@ -1,19 +1,30 @@
 import os
 
 SENTENCES = [
+    # "Klemek",
+    # "Everything you see",
+    # "Pixel by pixel",
+    # "Live",
+    # "Generated",
+    # "Controlled",
+    # "(Even this text)",
+    # "This is my code,",
+    # "This is my art. ",
+    # "Enjoy",
+    # "Lille VJ Fest",
+    "beLow",
+    "beLow beLow beLow",
+    "C'est la teuf",
     "Lille VJ Fest",
-    "Hi, I'm Klemek",
-    "Everything you see",
-    "Pixel by pixel",
-    "Is live      ",
-    "Is generated ",
-    "Is controlled",
-    "(Even this text)",
-    "This is my code,",
-    "This is my art.",
-    "Enjoy",
+    "Pour les yeux",
+    "Pour les oreilles",
+    "Machines",
+    "Sauvages",
+    "Drum & Drum",
+    "V8 + Shaders + Cam.",
 ]
 
+#   "                    "
 
 def convert(txt):
     out = []
